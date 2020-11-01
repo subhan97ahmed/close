@@ -4,7 +4,7 @@
 
 # Close
 
-Close is an andriod app which is created to making friends near you easy
+Close is an Andriod app created to help making new friends near you easy and fast  
 
 ## Development
 
