@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "99672428960",
+    "firebase_url": "https://close-337ca.firebaseio.com",
+    "project_id": "close-337ca",
+    "storage_bucket": "close-337ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99672428960:android:412efd0a3e2f632b0214c5",
+        "android_client_info": {
+          "package_name": "com.waterworks.close"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99672428960-vu5bu8ab1pr35sdok0ksd8686tnbeqrb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waterworks.close",
+            "certificate_hash": "77c20ec496a4c3d30ee216f4e70611c866258b83"
+          }
+        },
+        {
+          "client_id": "99672428960-kvjq2805ol4e6ak6o2s4hllgrnli2mba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUQVYvIxKlIDJk2jRSgKU3vjzbLIzMrfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99672428960-kvjq2805ol4e6ak6o2s4hllgrnli2mba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
