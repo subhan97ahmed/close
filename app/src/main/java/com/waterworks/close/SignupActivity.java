@@ -39,7 +39,7 @@ import java.util.Map;
 public class SignupActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 001;
-    private static final String TAG = "a";
+    private static final String TAG = "sign sup activity";
     private static final int LOCATION_CODE = 002;
     private FirebaseAuth auth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -50,14 +50,12 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
         auth = FirebaseAuth.getInstance();
         checkIfSignedin();
         googlesignin = findViewById(R.id.googlesignin);
         parent = findViewById(R.id.parent);
         handlepermssion();
         handleGoogleSignin();
-
     }
 
     private void checkIfSignedin() {

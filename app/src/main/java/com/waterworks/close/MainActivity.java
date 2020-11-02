@@ -10,6 +10,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -30,6 +32,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -60,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         final Location[] l = new Location[1];
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
-        if (user!=null) {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
+        if (user != null) {
+            final FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("users/").document(user.getUid()).get().addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
@@ -75,27 +78,51 @@ public class MainActivity extends AppCompatActivity {
                     assert doc != null;
                     User tempu = doc.toObject(User.class);
                     assert tempu != null;
-                    if ( tempu.getDob() != null && !tempu.getDob().equalsIgnoreCase(" ") ){
+                    if (tempu.getDob() != null && !tempu.getDob().equalsIgnoreCase(" ")) {
                         Toast.makeText(MainActivity.this, "has data", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         User u = null;
-                       //wee move to info activity
 
                         // get prompts.xml view
+                        //region code for Dialog box for username
                         LayoutInflater li = LayoutInflater.from(MainActivity.this);
                         View promptsView = li.inflate(R.layout.dialogbox, null);
 
                         final EditText userInput = (EditText) promptsView
                                 .findViewById(R.id.input);
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        final TextInputLayout inputLayout = (TextInputLayout) promptsView
+                                .findViewById(R.id.textInputLayout);
+                        final Button btnconfirm = (Button) promptsView
+                                .findViewById(R.id.btnconfirm);
+                        inputLayout.setPrefixText("");
+                        userInput.setText("");
+                        // dialog box for username
+                        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                                 MainActivity.this);
                         alertDialogBuilder.setView(promptsView);
                         alertDialogBuilder.setCancelable(false);
-                        alertDialogBuilder.create();
-                        alertDialogBuilder.show();
-                        // set prompts.xml to alertdialog builder
-
-
+                        alertDialogBuilder.setTitle("Enter Username");
+                        final AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                        btnconfirm.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+//                             this will check if the username is already taken or not
+                                String userInputText = userInput.getText().toString();
+                                db.collection("users/").whereEqualTo("username", userInputText).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.getResult().isEmpty()) {
+                                            inputLayout.setHelperTextColor(ColorStateList.valueOf(Color.RED));
+                                            inputLayout.setHelperText("this username is taken already");
+                                        } else {
+                                            alertDialog.dismiss();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        //endregion
                     }
                 }
             });
@@ -204,9 +231,7 @@ public class MainActivity extends AppCompatActivity {
 //            Nearby(l[0]);
 //        else
 //            Toast.makeText(this, "null location", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             // TODO: 10/1/2020  add when it will do when auth is null
         }
     }
